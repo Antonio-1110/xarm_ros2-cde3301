@@ -226,5 +226,9 @@
     <disable_collisions link1="${prefix}link5" link2="${prefix}link7" reason="Never" />
     <disable_collisions link1="${prefix}link6" link2="${prefix}link7" reason="Adjacent" />
     <disable_collisions link1="${prefix}link7" link2="${prefix}link_eef" reason="Adjacent" />
+
+    <!-- hardcoded xArm7 2-plate gripper (see xarm7.urdf.xacro) -->
+    <disable_collisions link1="${prefix}link6" link2="${prefix}gripper_link" reason="Adjacent" />
+    <disable_collisions link1="${prefix}link7" link2="${prefix}gripper_link" reason="Adjacent" />
   </xacro:macro>
 </robot>

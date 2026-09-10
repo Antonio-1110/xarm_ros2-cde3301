@@ -279,6 +279,66 @@
       <dynamics damping="2" friction="1" />
     </joint>
 
+    <!-- Hardcoded Gripper (.stl), attached at the TCP frame (link7) -->
+    <joint name="${prefix}link7_to_gripper" type="fixed">
+      <parent link="${prefix}link7"/>
+      <child link="${prefix}gripper_link"/>
+      <origin xyz="0 0 0" rpy="0 0 1.57"/>
+    </joint>
+
+    <link name="${prefix}gripper_link">
+      <visual>
+        <geometry>
+          <mesh filename="package://laundry_control/meshes/xArm7_Gripper_2Plate_Assembled_RevH_ROS2_Meters.stl"/>
+        </geometry>
+        <material name="${prefix}Silver"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://laundry_control/meshes/xArm7_Gripper_2Plate_Assembled_RevH_ROS2_Meters.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Hardcoded Laundry Bucket (.obj) -->
+    <joint name="${prefix}base_to_bucket_joint" type="fixed">
+      <parent link="${prefix}link_base"/> 
+      <child link="${prefix}laundry_bucket_link"/>
+      <origin xyz="0.14 -0.72 0.42" rpy="1.71 3.14 -3.14"/>
+    </joint>
+
+    <link name="${prefix}laundry_bucket_link">
+      <visual>
+        <geometry>
+          <mesh filename="package://laundry_control/meshes/bucket.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://laundry_control/meshes/bucket.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}base_to_automation" type="fixed">
+      <parent link="${prefix}link_base"/> 
+      <child link="${prefix}table_link"/>
+      <origin xyz="0.19 -0.43 -0.02" rpy="3.14 3.14 1.57"/>
+    </joint>
+
+    <link name="${prefix}table_link">
+      <visual>
+        <geometry>
+          <mesh filename="package://laundry_control/meshes/table.obj"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://laundry_control/meshes/table.obj"/>
+        </geometry>
+      </collision>
+    </link>
+
     <!-- <link name="${prefix}link_eef" />
     <joint name="${prefix}joint_eef" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
