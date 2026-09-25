@@ -1,0 +1,27 @@
+# Enables the Pilz industrial motion planner pipeline for xarm7.
+#
+# This file's EXISTENCE is what matters, as much as its contents.
+# MoveItConfigsBuilder.planning_pipelines() discovers pipelines by
+# globbing '*_planning.yaml' in config/xarm7/ - which previously
+# held only ompl_planning.yaml, so move_group came up with
+# planning_pipelines: ['ompl'] and any request naming Pilz failed.
+#
+# The real plugin/adapter configuration is inherited from
+# config/moveit_configs/pilz_industrial_motion_planner_planning.yaml;
+# whatever is set here is overlaid on top of it. Pilz's cartesian
+# limits are pulled in automatically once this pipeline is present
+# (to_moveit_configs() calls pilz_cartesian_limits() when it sees
+# it), falling back to config/moveit_configs/pilz_cartesian_limits.yaml.
+#
+# Why Pilz: PTP interpolates straight from the current joint
+# configuration to the target on a trapezoidal profile, so the same
+# start and goal always produce the same trajectory - unlike OMPL's
+# RRTConnect, which samples randomly and takes a different route
+# every run. laundry_control/move.py's move_joints() asks for
+# PTP first and falls back to OMPL automatically, since PTP fails
+# rather than routing around an obstacle and the bucket/table are
+# real collision geometry (URDF links, see xarm7.urdf.xacro).
+#
+# OMPL stays the default pipeline for anything that does not name a
+# pipeline explicitly.
+default_planner_config: PTP
